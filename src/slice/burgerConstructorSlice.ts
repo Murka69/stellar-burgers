@@ -83,7 +83,11 @@ export const burgerConstructorSlice = createSlice({
         ];
       }
     },
-    clearOrder: (_state) => initialState
+    clearOrder: (state) => {
+      state.orderRequest = false;
+      state.orderModalData = null;
+      state.error = null;
+    }
   },
   extraReducers: (builder) => {
     builder

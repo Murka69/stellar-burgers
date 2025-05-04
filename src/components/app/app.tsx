@@ -17,7 +17,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 import { getIngredients } from '../../slice/ingredientsSlice';
-import { ProtectedRoute } from '../../ProtectedRoute';
+import { ProtectedRoute } from '../ProtectedRoute';
 import { checkUserAuth } from '../../slice/userSlice';
 
 const App = () => {
@@ -26,7 +26,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   const locationState = location.state as { background?: Location };
-  const background = locationState && location.state?.background;
+  const background = locationState?.background;
 
   const closeModal = () => {
     navigate(-1);
@@ -45,7 +45,6 @@ const App = () => {
       <AppHeader />
       <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/feed' element={<Feed />} />
         <Route
           path='/login'
@@ -96,17 +95,8 @@ const App = () => {
           }
         />
         <Route path='*' element={<NotFound404 />} />
-        <Route path='/feed/:number' element={<OrderInfo />} />
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
-        <Route
-          path='/profile/orders/:number'
-          element={
-            <ProtectedRoute>
-              <OrderInfo />
-            </ProtectedRoute>
-          }
-        />
       </Routes>
+
       {background && (
         <Routes>
           <Route

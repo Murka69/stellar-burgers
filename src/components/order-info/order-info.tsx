@@ -1,17 +1,15 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient, TOrder } from '@utils-types';
+import { TIngredient } from '@utils-types';
 import { getIngredientsWithSelector } from '../../slice/ingredientsSlice';
-import { getFeedOrders, getOrderByNum } from '../../slice/feedDataSlice';
+import { getOrderByNum } from '../../slice/feedDataSlice';
 import { useSelector, useDispatch } from '../../services/store';
-import { useParams, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { selectOrderById } from '../../services/selector';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams();
-  const orders = useSelector(getFeedOrders);
   const dispatch = useDispatch();
 
   const orderData = useSelector(selectOrderById(Number(number)));
@@ -21,7 +19,7 @@ export const OrderInfo: FC = () => {
     if (!orderData) {
       dispatch(getOrderByNum(Number(number)));
     }
-  }, [dispatch]);
+  }, [dispatch, orderData, number]);
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return;
@@ -50,10 +48,12 @@ export const OrderInfo: FC = () => {
       },
       {}
     );
+
     const total = Object.values(ingredientsInfo).reduce(
       (acc, item) => acc + item.price * item.count,
       0
     );
+
     return {
       ...orderData,
       ingredientsInfo,

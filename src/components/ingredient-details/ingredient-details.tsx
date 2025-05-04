@@ -8,7 +8,6 @@ import styles from '../app/app.module.css';
 
 export const IngredientDetails: FC = () => {
   const ingredients = useSelector(getIngredientsWithSelector);
-
   const { id } = useParams();
 
   const ingredientData = ingredients.find((item) => item._id === id);

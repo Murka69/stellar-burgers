@@ -46,6 +46,8 @@ const App = () => {
       <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route
           path='/login'
           element={
@@ -94,15 +96,18 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        {/* 🚫 Это нужно оставить в конце */}
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
+      {/* Модальные окна поверх основного контента */}
       {background && (
         <Routes>
           <Route
             path='/feed/:number'
             element={
-              <Modal title={''} onClose={closeModal}>
+              <Modal title='' onClose={closeModal}>
                 <OrderInfo />
               </Modal>
             }
@@ -110,8 +115,8 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title={'Детали ингредиента'} onClose={closeModal}>
-                <IngredientDetails />
+              <Modal title='Детали ингредиента' onClose={closeModal}>
+                <IngredientDetails isModal />
               </Modal>
             }
           />
@@ -119,7 +124,7 @@ const App = () => {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal title={''} onClose={closeModal}>
+                <Modal title='' onClose={closeModal}>
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>

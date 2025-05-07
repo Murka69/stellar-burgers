@@ -1,21 +1,27 @@
-import React, { FC, memo } from 'react';
+import { FC, memo } from 'react';
 import {
   CurrencyIcon,
   FormattedDate
 } from '@zlden/react-developer-burger-ui-components';
 
 import styles from './order-info.module.css';
-
 import { OrderInfoUIProps } from './type';
 import { OrderStatus } from '@components';
 
 export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
   <div className={styles.wrap}>
-    <h3 className={`text text_type_main-medium  pb-3 pt-10 ${styles.header}`}>
-      {orderInfo.name}
-    </h3>
-    <OrderStatus status={orderInfo.status} />
-    <p className={`text text_type_main-medium pt-15 pb=6`}>Состав:</p>
+    <div className='mt-10'>
+      <h1 className='text text_type_main-large mb-6'>
+        Заказ #{String(orderInfo.number).padStart(6, '0')}
+      </h1>
+    </div>
+
+    <h2 className='text text_type_main-medium mb-6'>{orderInfo.name}</h2>
+    <div className='mb-6'>
+      <OrderStatus status={orderInfo.status} />
+    </div>
+
+    <p className='text text_type_main-medium pb-6'>Состав:</p>
     <ul className={`${styles.list} mb-8`}>
       {Object.values(orderInfo.ingredientsInfo).map((item, index) => (
         <li className={`pb-4 pr-6 ${styles.item}`} key={index}>
@@ -38,6 +44,7 @@ export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
         </li>
       ))}
     </ul>
+
     <div className={styles.bottom}>
       <p className='text text_type_main-default text_color_inactive'>
         <FormattedDate date={orderInfo.date} />

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { OrderStatusProps } from './type';
 import { OrderStatusUI } from '@ui';
 
@@ -17,9 +17,10 @@ export const OrderStatus: FC<OrderStatusProps> = ({ status }) => {
     case 'done':
       textStyle = '#00CCCC';
       break;
-    default:
+    case 'created':
       textStyle = '#F2F2F3';
+      break;
   }
 
-  return <OrderStatusUI textStyle={textStyle} text={statusText[textStyle]} />;
+  return <OrderStatusUI textStyle={textStyle} text={statusText[status]} />;
 };

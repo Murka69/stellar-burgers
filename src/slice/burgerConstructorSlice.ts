@@ -87,6 +87,8 @@ export const burgerConstructorSlice = createSlice({
       state.orderRequest = false;
       state.orderModalData = null;
       state.error = null;
+      state.constructorItems.bun = null;
+      state.constructorItems.ingredients = [];
     }
   },
   extraReducers: (builder) => {
